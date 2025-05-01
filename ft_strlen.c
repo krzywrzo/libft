@@ -6,13 +6,13 @@
 /*   By: kwrzosek <kwrzosek@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/28 14:56:58 by kwrzosek          #+#    #+#             */
-/*   Updated: 2024/12/19 11:33:41 by kwrzosek         ###   ########.fr       */
+/*   Updated: 2025/04/30 17:52:36 by kwrzosek         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-int	ft_strlen(const char *str)
+size_t	ft_strlen(const char *str)
 {
 	int	i;
 

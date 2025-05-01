@@ -6,101 +6,102 @@
 /*   By: kwrzosek <kwrzosek@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/19 11:58:09 by kwrzosek          #+#    #+#             */
-/*   Updated: 2024/12/19 13:12:06 by kwrzosek         ###   ########.fr       */
+/*   Updated: 2025/04/30 17:52:08 by kwrzosek         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-static unsigned int	ft_split_size(char const *str, char c)
-{
-	int	count;
-	int	key;
+static int word_count(const char *str, char c);
+static char *fill_word(const char *str, int start, int end);
+static void *ft_free(char **strs, int count);
+static void ft_initiate_vars(size_t *i, int *j, int *s_word);
 
-	count = 0;
-	key = 0;
-	while (*str != '\0')
-	{
-		if (*str != c)
-			key = 1;
-		else if (*str == c && key)
-		{
-			count++;
-			key = 0;
-		}
-		str++;
-	}
-	if (key)
-		count++;
-	return (count);
+char **ft_split(const char *s, char c)
+{
+    char **res;
+    size_t i;
+    int j;
+    int s_word;
+    
+    ft_initiate_vars(&i, &j, &s_word);
+    res = ft_calloc((word_count(s, c) + 1), sizeof(char *));
+    if (!res)
+        return (NULL);
+    while (i <= ft_strlen(s))
+    {
+        if (s[i] != c && s_word < 0)
+            s_word = i;
+        else if ((s[i] == c || i == ft_strlen(s)) && s_word >= 0)
+        {
+            res[j] = fill_word(s, s_word, i);
+            if (!(res[j]))
+                return (ft_free(res, j));
+            s_word = -1;
+            j++;
+        }
+        i++;
+    }
+    return (res);
 }
 
-static char	*ft_create_tokens(char *str, char c, int *begin_index)
+static void ft_initiate_vars(size_t *i, int *j, int *s_word)
 {
-	char	*token;
-	int		last_index;
-	int		i;
-
-	while (str[*begin_index] == c && str[*begin_index] != '\0')
-		(*begin_index)++;
-	last_index = *begin_index;
-	while (str[last_index] != c && str[last_index] != '\0')
-		last_index++;
-	if (last_index != *begin_index)
-	{
-		token = malloc(last_index - *begin_index + 1);
-		if (token == NULL)
-			return (NULL);
-		i = 0;
-		while (*begin_index < last_index && str[*begin_index] != c)
-		{
-			token[i] = str[*begin_index];
-			i++;
-			(*begin_index)++;
-		}
-		token[i] = '\0';
-		return (token);
-	}
-	return (NULL);
+    *i = 0;
+    *j = 0;
+    *s_word = -1;
 }
 
-static void	free_split(char **split)
+static void *ft_free(char **strs, int count)
 {
-	char	**splitt;
-
-	splitt = split;
-	while (*splitt != NULL)
-	{
-		free(*splitt);
-		splitt++;
-	}
-	free(split);
+    int i;
+    
+    i = 0;
+    while (i< count)
+    {
+        free(strs[i]);
+        i++;
+    }
+    free(strs);
+    return (NULL);
 }
 
-char	**ft_split(char const *str, char c)
+static char *fill_word(const char *str, int start, int end)
 {
-	unsigned int	split_size;
-	char			**split_tokens;
-	int				begin;
-	int				i;
-	char			*token;
+    char *word;
+    int i;
+    
+    i = 0;
+    word = malloc((end - start + 1) * sizeof(char));
+    if (!word)
+        return (NULL);
+    while (start < end)
+    {
+        word[i] = str[start];
+        i++;
+        start++;
+    }
+    word[i] = 0;
+    return (word);
+}
 
-	split_size = ft_split_size(str, c);
-	split_tokens = (char **) malloc(sizeof(char *) * (split_size + 1));
-	if (split_tokens == NULL || str == NULL)
-		return (NULL);
-	begin = 0;
-	i = 0;
-	while (split_size--)
-	{
-		token = ft_create_tokens((char *)str, c, &begin);
-		if (token == NULL)
-		{
-			free_split(split_tokens);
-			return (NULL);
-		}
-		split_tokens[i++] = token;
-	}
-	split_tokens[i] = NULL;
-	return (split_tokens);
+static int word_count(const char *str, char c)
+{
+    int count;
+    int x;
+    
+    count = 0;
+    x = 0;
+    while (*str)
+    {
+        if (*str != c && x == 0)
+        {
+            x = 1;
+            count++;
+        }
+        else if (*str == c)
+            x = 0;
+        str++;
+    }
+    return (count);
 }

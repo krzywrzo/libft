@@ -6,7 +6,7 @@
 /*   By: kwrzosek <kwrzosek@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/06 13:00:26 by kwrzosek          #+#    #+#             */
-/*   Updated: 2024/12/23 19:24:35 by kwrzosek         ###   ########.fr       */
+/*   Updated: 2025/05/01 13:43:47 by kwrzosek         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ void	*ft_calloc(size_t nmemb, size_t size)
 {
 	size_t	memsize;
 	void	*ptr;
-	char	*char_ptr;
+	// char	*char_ptr;
 
 	if (nmemb == 0 || size == 0)
 	{
@@ -32,7 +32,7 @@ void	*ft_calloc(size_t nmemb, size_t size)
 	{
 		return (NULL);
 	}
-	char_ptr = (char *)ptr;
+	// char_ptr = (char *)ptr;
 	ft_memset(ptr, 0, memsize);
 	return (ptr);
 }
