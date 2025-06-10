@@ -6,7 +6,11 @@
 /*   By: kwrzosek <kwrzosek@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/11 14:59:38 by kwrzosek          #+#    #+#             */
+<<<<<<< HEAD
 /*   Updated: 2025/04/30 17:53:03 by kwrzosek         ###   ########.fr       */
+=======
+/*   Updated: 2025/06/09 18:58:46 by kwrzosek         ###   ########.fr       */
+>>>>>>> 7cc08fa (added ft_atol and slightly changed ft_split)
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,5 +56,5 @@ void		ft_putchar_fd(char c, int fd);
 void		ft_putstr_fd(char *c, int fd);
 void		ft_putendl_fd(char *s, int fd);
 void		ft_putnbr_fd(int n, int fd);
-
+long	    ft_atol(const char *str);
 #endif
